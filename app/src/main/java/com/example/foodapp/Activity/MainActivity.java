@@ -2,10 +2,12 @@ package com.example.foodapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.LocaleList;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -17,9 +19,14 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.foodapp.Adapter.BannerAdapter;
 import com.example.foodapp.Adapter.BestFoodsAdapter;
 import com.example.foodapp.Adapter.CategoryAdapter;
+import com.example.foodapp.Domain.Banner;
 import com.example.foodapp.Domain.Category;
 import com.example.foodapp.Domain.Foods;
 import com.example.foodapp.Domain.Location;
@@ -36,9 +43,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
+    private final Handler bannerHandler = new Handler();
+    private final Runnable bannerRunnable = () -> binding.viewPage2Banner.setCurrentItem(binding.viewPage2Banner.getCurrentItem() + 1);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +71,7 @@ public class MainActivity extends BaseActivity {
 //        initPrice();
         initBestFood();
         initCategory();
+        initBanner();
         setVariable();
     }
 
@@ -216,5 +228,66 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void initBanner() {
+        DatabaseReference myRef = database.getReference("Banner");
+
+        binding.progressBarBanner.setVisibility(View.VISIBLE);
+        ArrayList<Banner> banners = new ArrayList<>();
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    Banner list = childSnapshot.getValue(Banner.class);
+                    if (list != null) {
+                        banners.add(list);
+                    }
+                }
+              Createanners(banners);
+                binding.progressBarBanner.setVisibility(View.GONE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void Createanners(List<Banner> lists) {
+        binding.viewPage2Banner.setAdapter(new BannerAdapter(lists, binding.viewPage2Banner));
+        binding.viewPage2Banner.setClipToPadding(false);
+        binding.viewPage2Banner.setClipChildren(false);
+        binding.viewPage2Banner.setOffscreenPageLimit(3);
+        binding.viewPage2Banner.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer((page, position) -> {
+            float r = 1 - Math.abs(position);
+            page.setScaleY(0.85f + r * 0.15f);
+        });
+
+        binding.viewPage2Banner.setPageTransformer(compositePageTransformer);
+        binding.viewPage2Banner.setCurrentItem(1);
+
+        binding.viewPage2Banner.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                bannerHandler.removeCallbacks(bannerRunnable);
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bannerHandler.removeCallbacks(bannerRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bannerHandler.postDelayed(bannerRunnable, 3000);
     }
 }
