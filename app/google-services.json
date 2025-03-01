@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "354585009676",
+    "firebase_url": "https://foodapp-ca7ae-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "foodapp-ca7ae",
+    "storage_bucket": "foodapp-ca7ae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354585009676:android:d4d63b39a2753369f79829",
+        "android_client_info": {
+          "package_name": "com.example.foodapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoJKtadfoYoEeA2zhKxZfoGZejkU96w3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
