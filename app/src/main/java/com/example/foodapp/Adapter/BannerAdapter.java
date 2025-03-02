@@ -1,6 +1,7 @@
 package com.example.foodapp.Adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +23,20 @@ import java.util.List;
 
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerViewHolder> {
     private final List<Banner> banners;
-    private final ViewPager2 viewPager2;
+    private List<Banner> fakeBanners = new ArrayList<>();
     private Context context;
 
-
-    public BannerAdapter(List<Banner> banners, ViewPager2 viewPager2) {
+    public BannerAdapter(List<Banner> banners) {
         this.banners = banners;
-        this.viewPager2 = viewPager2;
+        // Thêm duplicate: ảnh cuối vào đầu
+        fakeBanners.add(banners.get(banners.size() - 1));
+        // Thêm toàn bộ danh sách gốc
+        fakeBanners.addAll(banners);
+        // Thêm duplicate: ảnh đầu vào cuối
+        fakeBanners.add(banners.get(0));
+
     }
 
-    private final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            List<Banner> newItems = new ArrayList<>(banners); // Sao chép danh sách gốc
-            banners.addAll(newItems); // Thêm bản sao vào cuối danh sách
-            notifyDataSetChanged();
-        }
-    };
 
     @NonNull
     @Override
@@ -50,22 +48,20 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
     @Override
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
-        Banner banner = banners.get(position);
+        // Tính vị trí banner thật theo modulo
+        int virtualPosition = position % banners.size();
+        Banner banner = banners.get(virtualPosition);
 
         Glide.with(context)
                 .load(banner.getImagePath())
                 .transform(new CenterCrop(), new RoundedCorners(60))
                 .into(holder.img);
-
-
-        if (position == banners.size() - 2) {
-            viewPager2.post(runnable);
-        }
     }
 
     @Override
     public int getItemCount() {
-        return banners.size();
+         // Trả về số lượng ảo rất lớn để tạo cảm giác vô hạn
+        return Integer.MAX_VALUE;
     }
 
     public class BannerViewHolder extends RecyclerView.ViewHolder {

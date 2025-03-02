@@ -45,11 +45,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator3;
+
 public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
     private final Handler bannerHandler = new Handler();
-    private final Runnable bannerRunnable = () -> binding.viewPage2Banner.setCurrentItem(binding.viewPage2Banner.getCurrentItem() + 1);
-
+    private final Runnable bannerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            binding.viewPage2Banner.setCurrentItem(binding.viewPage2Banner.getCurrentItem() + 1, true);
+            bannerHandler.postDelayed(this, 3000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +94,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String text = binding.searchEdit.getText().toString();
-                if (!text.isEmpty())
-                {
-                    Intent itent = new Intent(MainActivity.this,ListFoodsActivity.class);
-                    itent.putExtra("searchText",text);
-                    itent.putExtra("isSearch",true);
+                if (!text.isEmpty()) {
+                    Intent itent = new Intent(MainActivity.this, ListFoodsActivity.class);
+                    itent.putExtra("searchText", text);
+                    itent.putExtra("isSearch", true);
                     startActivity(itent);
                 }
             }
@@ -99,7 +105,7 @@ public class MainActivity extends BaseActivity {
         binding.cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,CartActivity.class));
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
             }
         });
     }
@@ -188,9 +194,9 @@ public class MainActivity extends BaseActivity {
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Foods.class));
                     }
-                    if(list.size() > 0) {
+                    if (list.size() > 0) {
                         binding.bestFoodVIew.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                        RecyclerView.Adapter adapter = new BestFoodsAdapter( list);
+                        RecyclerView.Adapter adapter = new BestFoodsAdapter(list);
                         binding.bestFoodVIew.setAdapter(adapter);
                     }
                     binding.progressBarBestFood.setVisibility(View.GONE);
@@ -203,6 +209,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
     private void initCategory() {
         DatabaseReference myRef = database.getReference("Category");
         binding.progressBarCategory.setVisibility(View.VISIBLE);
@@ -214,7 +221,7 @@ public class MainActivity extends BaseActivity {
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Category.class));
                     }
-                    if(list.size() > 0) {
+                    if (list.size() > 0) {
                         binding.categoryView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         RecyclerView.Adapter adapter = new CategoryAdapter(list);
                         binding.categoryView.setAdapter(adapter);
@@ -245,17 +252,19 @@ public class MainActivity extends BaseActivity {
                         banners.add(list);
                     }
                 }
-              Createanners(banners);
+                createBanners(banners);
                 binding.progressBarBanner.setVisibility(View.GONE);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
 
-    private void Createanners(List<Banner> lists) {
-        binding.viewPage2Banner.setAdapter(new BannerAdapter(lists, binding.viewPage2Banner));
+    private void createBanners(List<Banner> originalBanners) {
+        BannerAdapter adapter = new BannerAdapter(originalBanners);
+        binding.viewPage2Banner.setAdapter(adapter);
         binding.viewPage2Banner.setClipToPadding(false);
         binding.viewPage2Banner.setClipChildren(false);
         binding.viewPage2Banner.setOffscreenPageLimit(3);
@@ -267,14 +276,43 @@ public class MainActivity extends BaseActivity {
             float r = 1 - Math.abs(position);
             page.setScaleY(0.85f + r * 0.15f);
         });
-
         binding.viewPage2Banner.setPageTransformer(compositePageTransformer);
-        binding.viewPage2Banner.setCurrentItem(1);
+
+        // Đặt current item ban đầu là 1 để hiển thị phần tử đầu tiên thực
+        binding.viewPage2Banner.setCurrentItem(1, false);
+
+        // Thiết lập CircleIndicator: tạo số dot bằng số phần tử trong danh sách gốc
+        binding.circleIndicator3.createIndicators(originalBanners.size(), 0);
 
         binding.viewPage2Banner.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                int realPosition = (position - 1 + originalBanners.size()) % originalBanners.size();
+                binding.circleIndicator3.animatePageSelected(realPosition);
                 bannerHandler.removeCallbacks(bannerRunnable);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                if (state == binding.viewPage2Banner.SCROLL_STATE_IDLE) {
+                    int curr = binding.viewPage2Banner.getCurrentItem();
+                    int lastReal = binding.viewPage2Banner.getAdapter().getItemCount() - 2;
+                    if (curr == 0) {
+                        binding.viewPage2Banner.setCurrentItem(lastReal, false);
+                    } else if (curr > lastReal) {
+                        binding.viewPage2Banner.setCurrentItem(1, false);
+                    }
+                }
+
+                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                    // Người dùng đang kéo: dừng auto-scroll
+                    bannerHandler.removeCallbacks(bannerRunnable);
+                } else if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    // Khi cuộn dừng lại, khởi động lại auto-scroll sau 3000ms
+                    bannerHandler.postDelayed(bannerRunnable, 3000);
+                }
             }
         });
     }
