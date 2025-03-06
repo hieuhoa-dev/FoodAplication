@@ -39,7 +39,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartAdapter.viewHolder holder,int position) {
+    public void onBindViewHolder(@NonNull CartAdapter.viewHolder holder, @SuppressLint("RecyclerView") int position) {
         Foods food = list.get(position);
         holder.title.setText(food.getTitle());
         holder.feeEachItem.setText("$"+food.getPrice());

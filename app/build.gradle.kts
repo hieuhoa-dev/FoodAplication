@@ -50,4 +50,5 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.code.gson:gson:2.12.1")
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.github.ibrahimsn98:SmoothBottomBar:1.7.9")
 }

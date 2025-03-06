@@ -43,7 +43,7 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
         holder.priceTxt.setText("$" + food.getPrice());
         holder.starTxt.setText(String.valueOf(food.getStar()));
         holder.timeTxt.setText(String.valueOf(food.getTimeValue() + " min"));
-
+        holder.saleTxt.setText("Sale "+food.getSale() + "%");
         Glide.with(context)
                 .load(food.getImagePath())
                 .transform(new CenterCrop(),new RoundedCorners(30))
@@ -65,7 +65,7 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
     }
 
     public class viewholder extends RecyclerView.ViewHolder {
-        TextView titleTxt, priceTxt, starTxt, timeTxt;
+        TextView titleTxt, priceTxt, starTxt, timeTxt,saleTxt;
         ImageView pic;
 
         public viewholder(@NonNull View itemView) {
@@ -75,6 +75,7 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
             starTxt = itemView.findViewById(R.id.starTxt);
             timeTxt = itemView.findViewById(R.id.timeTxt);
             pic = itemView.findViewById(R.id.pic);
+            saleTxt = itemView.findViewById(R.id.saleTxt);
         }
     }
 }

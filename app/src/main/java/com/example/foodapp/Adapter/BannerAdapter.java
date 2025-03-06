@@ -60,8 +60,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
     @Override
     public int getItemCount() {
-         // Trả về số lượng ảo rất lớn để tạo cảm giác vô hạn
-        return Integer.MAX_VALUE;
+        return fakeBanners.size();
     }
 
     public class BannerViewHolder extends RecyclerView.ViewHolder {

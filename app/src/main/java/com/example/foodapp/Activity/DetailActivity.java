@@ -24,6 +24,7 @@ public class DetailActivity extends BaseActivity {
     private int num = 1;
     private ManagmentCart managmentCart;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

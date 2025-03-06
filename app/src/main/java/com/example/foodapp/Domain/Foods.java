@@ -18,6 +18,8 @@ public class Foods implements Serializable {
     private  int TimeValue;
     private  String Title;
     private  int numberInCart;
+    private  int Sale;
+
 
     public Foods() {
     }
@@ -131,19 +133,11 @@ public class Foods implements Serializable {
         this.numberInCart = numberInCart;
     }
 
-    public Foods(int categoryId, String description, boolean bestFood, int id, int locationId, double price, String imagePath, int priceId, double star, int timeId, int timeValue, String title, int numberInCart) {
-        CategoryId = categoryId;
-        Description = description;
-        BestFood = bestFood;
-        Id = id;
-        LocationId = locationId;
-        Price = price;
-        ImagePath = imagePath;
-        PriceId = priceId;
-        Star = star;
-        TimeId = timeId;
-        TimeValue = timeValue;
-        Title = title;
-        this.numberInCart = numberInCart;
+    public int getSale() {
+        return Sale;
+    }
+
+    public void setSale(int sale) {
+        Sale = sale;
     }
 }
