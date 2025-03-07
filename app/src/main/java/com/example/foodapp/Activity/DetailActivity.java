@@ -2,17 +2,15 @@ package com.example.foodapp.Activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.example.foodapp.Domain.Foods;
+import com.example.foodapp.Model.Foods;
 
 import com.example.foodapp.Helper.ManagmentCart;
 import com.example.foodapp.R;

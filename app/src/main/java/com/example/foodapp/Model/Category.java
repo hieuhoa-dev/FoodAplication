@@ -1,7 +1,7 @@
-package com.example.foodapp.Domain;
+package com.example.foodapp.Model;
 
 public class Category {
-    private int id;
+    private int Id;
     private  String ImagePath;
     private String Name;
 
@@ -9,7 +9,7 @@ public class Category {
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public String getImagePath() {
@@ -21,7 +21,7 @@ public class Category {
     }
 
     public Category(int id, String imagePath, String name) {
-        this.id = id;
+        this.Id = id;
         ImagePath = imagePath;
         Name = name;
     }

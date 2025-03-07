@@ -9,7 +9,7 @@
     <item
         android:id="@+id/menu_cart"
         android:title="Cart"
-        android:icon="@drawable/ic_shopping_basket_white_24">
+        android:icon="@drawable/cart">
     </item>
     <item
         android:id="@+id/menu_account"

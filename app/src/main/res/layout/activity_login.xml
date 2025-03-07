@@ -49,18 +49,39 @@
                 android:textColorHint="@color/blue_grey"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/passEdit"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/editext_background"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="12dp"
-                android:textAlignment="center"
-                android:textColorHint="@color/blue_grey"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/passEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/editext_background"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/blue_grey"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imgShow"
+                    android:src="@drawable/hidden"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:tint="@color/red"
+                    android:padding="8dp"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView5"

@@ -67,5 +67,19 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        binding.imgShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (binding.passEdit.getInputType() == 129) {
+                    binding.passEdit.setInputType(128);
+                    binding.imgShow.setImageResource(R.drawable.show);
+                } else {
+                    binding.passEdit.setInputType(129);
+                    binding.imgShow.setImageResource(R.drawable.hidden);
+                }
+            }
+        });
     }
 }

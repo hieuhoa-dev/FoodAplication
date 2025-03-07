@@ -1,4 +1,4 @@
-package com.example.foodapp.Domain;
+package com.example.foodapp.Model;
 
 public class Banner {
     int Id;

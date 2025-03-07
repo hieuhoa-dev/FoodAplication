@@ -1,15 +1,12 @@
-package com.example.foodapp.Domain;
+package com.example.foodapp.Model;
 
-public class Time {
+public class Price {
     private int Id;
     private String Value;
 
-    public Time() {
-    }
-
     @Override
     public String toString() {
-        return  Value;
+        return Value ;
     }
 
     public int getId() {

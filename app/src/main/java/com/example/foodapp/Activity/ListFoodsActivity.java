@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.Adapter.FoodListAdapter;
-import com.example.foodapp.Domain.Foods;
+import com.example.foodapp.Model.Foods;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityListFoodsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +22,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListFoodsActivity extends BaseActivity {
     ActivityListFoodsBinding binding;
     private RecyclerView.Adapter adapterListFood;
-    private  int categoryId;
-    private  String categoryName;
+    private int categoryId;
+    private String categoryName;
     private String searchText;
     private boolean isSearch;
 
@@ -47,20 +48,20 @@ public class ListFoodsActivity extends BaseActivity {
         getIntentExtra();
         initList();
     }
-    private void initList(){
+
+    private void initList() {
         DatabaseReference myRef = database.getReference("Foods");
         binding.progressBar.setVisibility(View.VISIBLE);
         ArrayList<Foods> list = new ArrayList<>();
 
         Query query;
 
-        if(isSearch){
-            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText+"\uf8ff");
-        }else{
-            if("All".equals(searchText))
-            {
+        if (isSearch) {
+            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText + "\uf8ff");
+        } else {
+            if ("All".equals(searchText)) {
                 query = myRef;
-            }else{
+            } else {
                 query = myRef.orderByChild("CategoryId").equalTo(categoryId);
             }
 
@@ -68,33 +69,40 @@ public class ListFoodsActivity extends BaseActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        for (DataSnapshot issue : snapshot.getChildren()) {
-                            Foods foods = issue.getValue(Foods.class);
-                            list.add(foods);
-                        }
-                        if (list.size()>0)
-                        {
-                            binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this,2));
-                            adapterListFood = new FoodListAdapter(list);
-                            binding.foodListView.setAdapter(adapterListFood);
+                if (snapshot.exists()) {
+                    for (DataSnapshot issue : snapshot.getChildren()) {
+                        Foods foods = issue.getValue(Foods.class);
+                        list.add(foods);
+                    }
+                    if (list.size() > 0) {
+                        binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this, 2));
+                        adapterListFood = new FoodListAdapter(list);
+                        binding.foodListView.setAdapter(adapterListFood);
 
-                        }
-                        binding.progressBar.setVisibility(View.GONE);
-                    };
+                    }
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+                else
+                {
+                    binding.notListFoodTxt.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
-    private void getIntentExtra(){
-        categoryId = getIntent().getIntExtra("categoryId",0);
+
+    private void getIntentExtra() {
+        categoryId = getIntent().getIntExtra("categoryId", 0);
         categoryName = getIntent().getStringExtra("categoryName");
         searchText = getIntent().getStringExtra("searchText");
-        isSearch = getIntent().getBooleanExtra("isSearch",false);
+        isSearch = getIntent().getBooleanExtra("isSearch", false);
+
+        if (Objects.equals(searchText, "All"))
+            categoryName = "All Foods";
 
         binding.tilteTxt.setText(categoryName);
         binding.backBtn.setOnClickListener(v -> finish());

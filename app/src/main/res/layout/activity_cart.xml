@@ -20,8 +20,9 @@
 
     <TextView
         android:id="@+id/emptyTxt"
-        android:layout_width="65dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
         android:text="Your cart is Emty"
         android:visibility="gone"
         android:textStyle="bold"

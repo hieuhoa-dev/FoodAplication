@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,15 +18,12 @@ import android.view.ViewGroup;
 
 import com.example.foodapp.Activity.CartActivity;
 import com.example.foodapp.Activity.ListFoodsActivity;
-import com.example.foodapp.Activity.MainActivity;
 import com.example.foodapp.Adapter.BannerAdapter;
 import com.example.foodapp.Adapter.BestFoodsAdapter;
 import com.example.foodapp.Adapter.CategoryAdapter;
-import com.example.foodapp.Domain.Banner;
-import com.example.foodapp.Domain.Category;
-import com.example.foodapp.Domain.Foods;
-import com.example.foodapp.R;
-import com.example.foodapp.databinding.ActivityMainBinding;
+import com.example.foodapp.Model.Banner;
+import com.example.foodapp.Model.Category;
+import com.example.foodapp.Model.Foods;
 import com.example.foodapp.databinding.FragmentHomeBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
