@@ -22,7 +22,7 @@ import me.ibrahimsn.lib.OnItemSelectedListener;
 
 public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
-
+    int type = WindowInsetsCompat.Type.systemBars();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +33,7 @@ public class MainActivity extends BaseActivity {
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            // Đổi màu Status Bar
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+
             return insets;
         });
 
@@ -61,6 +60,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onItemSelect(int i) {
                 binding.fragmentContainer.setCurrentItem(i,false);
+                if(i == 2)
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.accent));
+                else
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.white));
                 return true;
             }
         });

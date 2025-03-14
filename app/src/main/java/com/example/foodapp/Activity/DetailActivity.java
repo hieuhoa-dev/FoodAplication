@@ -31,17 +31,6 @@ public class DetailActivity extends BaseActivity {
         setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            // Đổi màu Status Bar
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black));
-            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.black));
-            return insets;
-        });
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.black));
-
-
         getIntentExtra();
         setVariable();
     }

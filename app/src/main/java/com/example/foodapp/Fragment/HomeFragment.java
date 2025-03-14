@@ -1,6 +1,8 @@
 package com.example.foodapp.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.example.foodapp.Activity.CartActivity;
 import com.example.foodapp.Activity.ListFoodsActivity;
+import com.example.foodapp.Activity.SearchActivity;
 import com.example.foodapp.Adapter.BannerAdapter;
 import com.example.foodapp.Adapter.BestFoodsAdapter;
 import com.example.foodapp.Adapter.CategoryAdapter;
@@ -32,11 +37,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
     FragmentHomeBinding binding;
+
+
     private final Handler bannerHandler = new Handler();
     private final Runnable bannerRunnable = new Runnable() {
         @Override
@@ -60,6 +68,8 @@ public class HomeFragment extends BaseFragment {
         //        initLocation();
 //        initTime();
 //        initPrice();
+
+
         initBestFood();
         initCategory();
         initBanner();
@@ -67,6 +77,9 @@ public class HomeFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+
+
+    @SuppressLint("ClickableViewAccessibility")
     public void setVariable() {
 //        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -75,24 +88,13 @@ public class HomeFragment extends BaseFragment {
 //                startActivity(new Intent(MainActivity.this,LoginActivity.class));
 //            }
 //        });
-        binding.searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = binding.searchEdit.getText().toString();
-                if (!text.isEmpty()) {
-                    Intent itent = new Intent(getContext(), ListFoodsActivity.class);
-                    itent.putExtra("searchText", text);
-                    itent.putExtra("isSearch", true);
-                    startActivity(itent);
-                }
-            }
-        });
-        binding.cartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), CartActivity.class));
-            }
-        });
+
+//        binding.cartBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), CartActivity.class));
+//            }
+//        });
         binding.searchAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +102,15 @@ public class HomeFragment extends BaseFragment {
                 itent.putExtra("searchText", "All");
                 startActivity(itent);
             }
+        });
+
+        binding.searchEdit.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+                return true; // Đánh dấu sự kiện đã xử lý
+            }
+            return false; // Không xử lý các sự kiện khác
         });
     }
 

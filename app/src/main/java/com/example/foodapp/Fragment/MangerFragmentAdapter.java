@@ -20,7 +20,7 @@ public class MangerFragmentAdapter extends FragmentStateAdapter {
             case 1:
                 return new CartFragment();
             case 2:
-                return new HomeFragment();
+                return new AccountFragment();
             default:
                 return new HomeFragment();
         }

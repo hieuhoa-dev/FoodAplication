@@ -63,6 +63,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
                 });
             }
         });
+
         holder.minusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

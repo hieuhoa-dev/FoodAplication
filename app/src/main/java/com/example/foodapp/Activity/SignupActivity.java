@@ -13,14 +13,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodapp.Model.Users;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends BaseActivity {
     ActivitySignupBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,7 @@ public class SignupActivity extends BaseActivity {
         });
 
         setVariable();
+
     }
 
     // Kiểm tra mật khẩu có hợp lệ hay không và đăng ký tài khoản
@@ -46,22 +55,21 @@ public class SignupActivity extends BaseActivity {
             public void onClick(View view) {
                 String email = binding.userEdit.getText().toString();
                 String password = binding.passEdit.getText().toString();
-                if(password.length()<6){
+                if (password.length() < 6) {
                     Toast.makeText(SignupActivity.this, "Your password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // Sẽ Sửa sau
-                        if(task.isSuccessful())
-                        {
-                            Log.i(TAG,"Successful");
-                            startActivity(new Intent(SignupActivity.this,MainActivity.class));
-                        }
-                        else
-                        {
-                            Log.i(TAG,"Fail",task.getException());
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "Successful");
+                            currentUser = mAuth.getCurrentUser();
+                            SetAccount();
+                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                        } else {
+                            Log.i(TAG, "Fail", task.getException());
                             Toast.makeText(SignupActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -72,7 +80,7 @@ public class SignupActivity extends BaseActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,5 +97,27 @@ public class SignupActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    void SetAccount() {
+        if (currentUser == null) {
+            // Người dùng chưa đăng nhập, xử lý tùy ý
+            return;
+        }
+
+        String uid = currentUser.getUid();
+        String email = currentUser.getEmail();
+        Users user = new Users(uid, "nameUser", "phoneNumber", email);
+
+        // Lưu vào collection "users", document = uid
+        firestore.collection("Users")
+                .document(uid)           // Đặt doc ID = UID
+                .set(user)              // Dùng set() thay vì add()
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("Firestore", "User info saved successfully!");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error saving user info", e);
+                });
     }
 }
