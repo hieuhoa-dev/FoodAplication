@@ -1,6 +1,7 @@
 package com.example.foodapp.Helper;
 
+import com.example.foodapp.Model.Users;
+
 public interface GetUser {
-    void Login();
-    void SignUp();
+    void sendData(Users user);
 }

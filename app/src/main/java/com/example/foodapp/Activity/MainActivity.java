@@ -2,11 +2,11 @@ package com.example.foodapp.Activity;
 
 
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.activity.EdgeToEdge;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -14,6 +14,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 
 import com.example.foodapp.Fragment.MangerFragmentAdapter;
+import com.example.foodapp.Helper.ManagementAccount;
+import com.example.foodapp.Model.Users;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityMainBinding;
 
@@ -38,6 +40,7 @@ public class MainActivity extends BaseActivity {
         });
 
         setVariable();
+        saveUserInfo();
     }
 
     public void setVariable() {
@@ -67,5 +70,22 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+    void saveUserInfo() {
+        if (mAuth.getCurrentUser()==null)
+            return;
+        String uid = mAuth.getCurrentUser().getUid();
+        firestore.collection("Users").document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Users user = documentSnapshot.toObject(Users.class);
+                        if (user != null) {
+                            ManagementAccount.getInstance().setCurrentUser(user);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error getting user info", e);
+                });
     }
 }

@@ -16,18 +16,19 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.foodapp.Model.Foods;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
-import com.example.foodapp.Helper.ManagmentCart;
+import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.R;
 
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
     ArrayList<Foods> list;
-    private ManagmentCart managmentCart;
+    private ManagementCart managmentCart;
     ChangeNumberItemsListener changeNumberItemsListener;
+
     public CartAdapter(ArrayList<Foods> list, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
         this.list = list;
-        managmentCart = new ManagmentCart(context);
+        managmentCart = new ManagementCart(context);
         this.changeNumberItemsListener = changeNumberItemsListener;
     }
 

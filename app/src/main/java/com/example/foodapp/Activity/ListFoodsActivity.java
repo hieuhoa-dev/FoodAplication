@@ -107,6 +107,4 @@ public class ListFoodsActivity extends BaseActivity {
         binding.tilteTxt.setText(categoryName);
         binding.backBtn.setOnClickListener(v -> finish());
     }
-
-
 }

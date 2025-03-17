@@ -2,7 +2,6 @@ package com.example.foodapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,14 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.firestore.DocumentReference;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
@@ -62,16 +55,12 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
-        binding.signupTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-            }
+        binding.signupTxt.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
         });
 
         binding.imgShow.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +77,4 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
-
 }

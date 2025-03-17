@@ -2,17 +2,15 @@ package com.example.foodapp.Fragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodapp.Helper.GetUser;
+import com.example.foodapp.Helper.ManagementAccount;
 import com.example.foodapp.Model.Users;
-import com.example.foodapp.R;
 import com.example.foodapp.databinding.FragmentAccountBinding;
-import com.example.foodapp.databinding.FragmentCartBinding;
 
 public class AccountFragment extends BaseFragment {
     FragmentAccountBinding binding;
@@ -27,6 +25,7 @@ public class AccountFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(getLayoutInflater());
         setVariable();
+//        updateUserInfo();
         return binding.getRoot();
     }
 
@@ -36,6 +35,7 @@ public class AccountFragment extends BaseFragment {
             Log.e("Firestore", "Current user is null");
             return;
         }
+
         firestore.collection("Users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -51,5 +51,26 @@ public class AccountFragment extends BaseFragment {
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error getting user info", e);
                 });
+    }
+
+
+    void updateUserInfo() {
+        // Giả sử managmentAccount đã được khởi tạo và user đã được lưu từ Login
+        ManagementAccount.getInstance().getAccount(new GetUser() {
+            @Override
+            public void sendData(Users user) {
+                if (user != null) {
+                    binding.NameUserTxt.setText(user.getNameUser());
+                    binding.EmailUserTxt.setText(user.getEmail());
+                    binding.PhoneNumberTxt.setText(user.getPhoneNumber());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //updateUserInfo();
     }
 }

@@ -10,19 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodapp.Activity.MainActivity;
 import com.example.foodapp.Adapter.CartAdapter;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
-import com.example.foodapp.Helper.ManagmentCart;
-import com.example.foodapp.R;
-import com.example.foodapp.databinding.ActivityCartBinding;
+import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.databinding.FragmentCartBinding;
 
 public class CartFragment extends Fragment {
 
     private FragmentCartBinding binding;
     private RecyclerView.Adapter adapter;
-    private ManagmentCart managmentCart;
+    private ManagementCart managmentCart;
     private  double tax;
 
     @Override
@@ -35,7 +32,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(getLayoutInflater());
 
-        managmentCart = new ManagmentCart(getContext());
+        managmentCart = new ManagementCart(getContext());
         caculateCart();
         initList();
         return binding.getRoot();

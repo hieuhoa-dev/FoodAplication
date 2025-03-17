@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.Adapter.CartAdapter;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
-import com.example.foodapp.Helper.ManagmentCart;
-import com.example.foodapp.R;
+import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.databinding.ActivityCartBinding;
 
 public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
     private RecyclerView.Adapter adapter;
-    private ManagmentCart managmentCart;
+    private ManagementCart managmentCart;
     private  double tax;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class CartActivity extends AppCompatActivity {
             return insets;
         });
 
-        managmentCart = new ManagmentCart(this);
+        managmentCart = new ManagementCart(this);
         setVairable();
         caculateCart();
         initList();

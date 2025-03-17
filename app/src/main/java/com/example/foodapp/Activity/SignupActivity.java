@@ -65,9 +65,9 @@ public class SignupActivity extends BaseActivity {
                         // Sẽ Sửa sau
                         if (task.isSuccessful()) {
                             Log.i(TAG, "Successful");
-                            currentUser = mAuth.getCurrentUser();
                             SetAccount();
-                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                            Toast.makeText(SignupActivity.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.i(TAG, "Fail", task.getException());
                             Toast.makeText(SignupActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
@@ -100,11 +100,11 @@ public class SignupActivity extends BaseActivity {
     }
 
     void SetAccount() {
+        currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             // Người dùng chưa đăng nhập, xử lý tùy ý
             return;
         }
-
         String uid = currentUser.getUid();
         String email = currentUser.getEmail();
         Users user = new Users(uid, "nameUser", "phoneNumber", email);
