@@ -39,32 +39,32 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewho
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         Category category = items.get(position);
         holder.titleTxt.setText(category.getName());
-        switch (position) {
-            case 0:
-                holder.pic.setBackgroundResource(R.drawable.cat_0_background);
-                break;
-            case 1:
-                holder.pic.setBackgroundResource(R.drawable.cat_1_background);
-                break;
-            case 2:
-                holder.pic.setBackgroundResource(R.drawable.cat_2_background);
-                break;
-            case 3:
-                holder.pic.setBackgroundResource(R.drawable.cat_3_background);
-                break;
-            case 4:
-                holder.pic.setBackgroundResource(R.drawable.cat_4_background);
-                break;
-            case 5:
-                holder.pic.setBackgroundResource(R.drawable.cat_5_background);
-                break;
-            case 6:
-                holder.pic.setBackgroundResource(R.drawable.cat_6_background);
-                break;
-            case 7:
-                holder.pic.setBackgroundResource(R.drawable.cat_7_background);
-                break;
-        }
+//        switch (position) {
+//            case 0:
+//                holder.pic.setBackgroundResource(R.drawable.cat_0_background);
+//                break;
+//            case 1:
+//                holder.pic.setBackgroundResource(R.drawable.cat_1_background);
+//                break;
+//            case 2:
+//                holder.pic.setBackgroundResource(R.drawable.cat_2_background);
+//                break;
+//            case 3:
+//                holder.pic.setBackgroundResource(R.drawable.cat_3_background);
+//                break;
+//            case 4:
+//                holder.pic.setBackgroundResource(R.drawable.cat_4_background);
+//                break;
+//            case 5:
+//                holder.pic.setBackgroundResource(R.drawable.cat_5_background);
+//                break;
+//            case 6:
+//                holder.pic.setBackgroundResource(R.drawable.cat_6_background);
+//                break;
+//            case 7:
+//                holder.pic.setBackgroundResource(R.drawable.cat_7_background);
+//                break;
+//        }
         int drawableResourceId = context.getResources().getIdentifier(category.getImagePath()
                 , "drawable",
                 holder.itemView.getContext().getPackageName());

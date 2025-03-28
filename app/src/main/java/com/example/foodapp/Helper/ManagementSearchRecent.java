@@ -32,8 +32,11 @@ public class ManagementSearchRecent {
         }
         if (existAlready) {
             return;
+        }
+        if (item.getCategory().equals("Recent")) {
+            listpop.add(0, item);
         } else {
-            listpop.add( 0,item);
+            listpop.add(item);
         }
         searchRecent.putListObject("SearchRecent", listpop);
     }

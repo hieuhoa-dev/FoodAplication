@@ -36,6 +36,7 @@ public class BaseActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.white));
 
+
     }
 
     @Override

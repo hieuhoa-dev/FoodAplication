@@ -6,16 +6,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.foodapp.Adapter.CartAdapter;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
 import com.example.foodapp.Helper.ManagementCart;
+import com.example.foodapp.Model.Bill;
+import com.example.foodapp.Model.Users;
 import com.example.foodapp.databinding.FragmentCartBinding;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends BaseFragment {
 
     private FragmentCartBinding binding;
     private RecyclerView.Adapter adapter;
@@ -35,15 +39,36 @@ public class CartFragment extends Fragment {
         managmentCart = new ManagementCart(getContext());
         caculateCart();
         initList();
+        setVariable();
         return binding.getRoot();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        caculateCart();
-        initList();
+    private void setVariable() {
+        binding.orderBtn.setOnClickListener(view -> SaveBill());
     }
+    void SaveBill() {
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            return;
+        }
+        String uid = currentUser.getUid();
+        Bill bill = new Bill("",uid, managmentCart.getListCart());
+
+        firestore.collection("Bill")
+                .add(bill)
+                .addOnSuccessListener(documentReference -> {
+                    String billId = documentReference.getId(); // Lấy ID tự động
+                    documentReference.update("id", billId) // Cập nhật id
+                            .addOnSuccessListener(e ->
+                                    Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(getContext(), "Failed to update bill ID", Toast.LENGTH_SHORT).show());
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Order fail", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 
     private void initList() {
         if(managmentCart.getListCart().isEmpty()) {
@@ -78,5 +103,12 @@ public class CartFragment extends Fragment {
         binding.taxTxt.setText(tax + "");
         binding.totalTxt.setText(total + "");
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        caculateCart();
+        initList();
     }
 }

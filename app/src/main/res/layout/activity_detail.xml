@@ -35,15 +35,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/favBtn"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/favorite_white"
                     app:layout_constraintBottom_toBottomOf="@+id/pic"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pic" />
+                    app:layout_constraintTop_toBottomOf="@+id/pic">
+
+                    <ImageView
+                        android:id="@+id/favBtn"
+                        android:layout_margin="15dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bg_fav"
+                        android:elevation="5dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_favorite_border"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
                     android:id="@+id/backBtn"

@@ -6,9 +6,11 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 
 import com.bumptech.glide.Glide;
+import com.example.foodapp.Helper.CustomerNotify;
 import com.example.foodapp.Model.Foods;
 
 import com.example.foodapp.Helper.ManagementCart;
+import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends BaseActivity {
@@ -16,7 +18,7 @@ public class DetailActivity extends BaseActivity {
     private Foods object;
     private int num = 1;
     private ManagementCart managmentCart;
-
+    private boolean isFav = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,20 @@ public class DetailActivity extends BaseActivity {
         binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               object.setNumberInCart(num);
-               managmentCart.insertFood(object);
+                object.setNumberInCart(num);
+                managmentCart.insertFood(object);
+                new CustomerNotify(DetailActivity.this, "Thông báo", "Đã thêm vào giỏ hàng");
+            }
+        });
+        binding.favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFav) {
+                    binding.favBtn.setImageResource(R.drawable.ic_favorite_border); // Bỏ thích
+                } else {
+                    binding.favBtn.setImageResource(R.drawable.ic_favorite); // Đã thích
+                }
+                isFav = !isFav;
             }
         });
     }

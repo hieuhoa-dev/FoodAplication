@@ -149,16 +149,17 @@ public class SearchActivity extends BaseActivity {
                                 }
                             }
                             if (!exists) {
-                                recentList.add(item);
+//                                recentList.add(item);
+                                managementSearchRecent.insertSearchRecent(item);
                             }
                         }
                     }
                 }
+                recentList = managementSearchRecent.getListRecent();
                 // Thiết lập RecyclerView với adapter
                 binding.searchRecommendView.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false));
                 adapter = new SearchRecommendAdpater(recentList);
-                binding.searchRecommendView.setAdapter(adapter);
-            }
+                binding.searchRecommendView.setAdapter(adapter);}
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

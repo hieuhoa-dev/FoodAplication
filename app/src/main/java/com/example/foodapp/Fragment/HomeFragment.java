@@ -2,7 +2,6 @@ package com.example.foodapp.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,9 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-import com.example.foodapp.Activity.CartActivity;
 import com.example.foodapp.Activity.ListFoodsActivity;
 import com.example.foodapp.Activity.SearchActivity;
 import com.example.foodapp.Adapter.BannerAdapter;
@@ -65,9 +62,7 @@ public class HomeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        //        initLocation();
-//        initTime();
-//        initPrice();
+
 
 
         initBestFood();
@@ -114,77 +109,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-//    private void initLocation() {
-//        DatabaseReference myRef = database.getReference("Location");
-//        ArrayList<Location> list = new ArrayList<>();
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot issue : snapshot.getChildren()) {
-//                        Location location = issue.getValue(Location.class);
-//                        list.add(location);
-//                    }
-//                    ArrayAdapter<Location> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.sp_item, list);
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    binding.locationSpin.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-//
-//    private void initTime() {
-//        DatabaseReference myRef = database.getReference("Time");
-//        ArrayList<Time> list = new ArrayList<>();
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot issue : snapshot.getChildren()) {
-//                        Time time = issue.getValue(Time.class);
-//                        list.add(time);
-//                    }
-//                    ArrayAdapter<Time> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.sp_item, list);
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    binding.timeSpin.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-//
-//    private void initPrice() {
-//        DatabaseReference myRef = database.getReference("Price");
-//        ArrayList<Price> list = new ArrayList<>();
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot issue : snapshot.getChildren()) {
-//                        Price price = issue.getValue(Price.class);
-//                        list.add(price);
-//                    }
-//                    ArrayAdapter<Price> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.sp_item, list);
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    binding.priceSpin.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private void initBestFood() {
         DatabaseReference myRef = database.getReference("Foods");
