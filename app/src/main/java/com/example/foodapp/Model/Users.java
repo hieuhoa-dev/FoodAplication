@@ -5,15 +5,25 @@ public class Users {
     String NameUser;
     String Email;
     String PhoneNumber;
+    String Img;
 
     public Users() {
     }
 
-    public Users(String id, String nameUser, String phoneNumber, String email) {
+    public Users(String id, String nameUser, String phoneNumber, String email, String Img) {
         Id = id;
         NameUser = nameUser;
         PhoneNumber = phoneNumber;
         Email = email;
+        this.Img = Img;
+    }
+
+    public String getImg() {
+        return Img;
+    }
+
+    public void setImg(String img) {
+        Img = img;
     }
 
     public String getId() {

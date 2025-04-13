@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.foodapp.Helper.CustomerNotify;
+import com.example.foodapp.Components.CustomNotify;
 import com.example.foodapp.Model.Foods;
 
 import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityDetailBinding;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends AppCompatActivity {
     ActivityDetailBinding binding;
     private Foods object;
     private int num = 1;
@@ -69,7 +70,7 @@ public class DetailActivity extends BaseActivity {
             public void onClick(View view) {
                 object.setNumberInCart(num);
                 managmentCart.insertFood(object);
-                new CustomerNotify(DetailActivity.this, "Thông báo", "Đã thêm vào giỏ hàng");
+                new CustomNotify(DetailActivity.this, "Thông báo", "Đã thêm vào giỏ hàng");
             }
         });
         binding.favBtn.setOnClickListener(new View.OnClickListener() {

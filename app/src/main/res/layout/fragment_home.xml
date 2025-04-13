@@ -22,7 +22,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/white_background"
+                android:background="@drawable/bg_white"
                 android:orientation="horizontal"
                 android:elevation="5dp"
                 android:layout_margin="5dp"

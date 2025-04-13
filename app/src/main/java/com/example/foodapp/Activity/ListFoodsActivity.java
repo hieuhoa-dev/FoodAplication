@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapp.Adapter.FoodListAdapter;
+import com.example.foodapp.Helper.FoodRepository;
+import com.example.foodapp.Helper.OnFoodListener;
 import com.example.foodapp.Model.Foods;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityListFoodsBinding;
@@ -24,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ListFoodsActivity extends BaseActivity {
+public class ListFoodsActivity extends AppCompatActivity {
     ActivityListFoodsBinding binding;
     private RecyclerView.Adapter adapterListFood;
     private int categoryId;
@@ -50,47 +53,27 @@ public class ListFoodsActivity extends BaseActivity {
     }
 
     private void initList() {
-        DatabaseReference myRef = database.getReference("Foods");
         binding.progressBar.setVisibility(View.VISIBLE);
-        ArrayList<Foods> list = new ArrayList<>();
 
-        Query query;
-
-        if (isSearch) {
-            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText + "\uf8ff");
-        } else {
-            if ("All".equals(searchText)) {
-                query = myRef;
-            } else {
-                query = myRef.orderByChild("CategoryId").equalTo(categoryId);
-            }
-
-        }
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        FoodRepository repository = new FoodRepository();
+        repository.getFoods(isSearch, searchText, categoryId, new OnFoodListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot issue : snapshot.getChildren()) {
-                        Foods foods = issue.getValue(Foods.class);
-                        list.add(foods);
-                    }
-                    if (list.size() > 0) {
-                        binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this, 2));
-                        adapterListFood = new FoodListAdapter(list);
-                        binding.foodListView.setAdapter(adapterListFood);
-
-                    }
-                    binding.progressBar.setVisibility(View.GONE);
-                }
-                else
-                {
-                    binding.notListFoodTxt.setVisibility(View.VISIBLE);
-                    binding.progressBar.setVisibility(View.GONE);
-                }
+            public void onDataReceived(ArrayList<Foods> foodList) {
+                adapterListFood = new FoodListAdapter(foodList);
+                binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this, 2));
+                binding.foodListView.setAdapter(adapterListFood);
+                binding.progressBar.setVisibility(View.GONE);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onDataEmpty() {
+                binding.notListFoodTxt.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                binding.progressBar.setVisibility(View.GONE);
             }
         });
     }

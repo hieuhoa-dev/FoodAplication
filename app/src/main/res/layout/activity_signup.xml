@@ -44,11 +44,24 @@
                 android:background="@color/red" />
 
             <EditText
+                android:id="@+id/nameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_edittext"
+                android:hint="Your Name"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textAlignment="center"
+                android:textColorHint="@color/blue_grey"
+                android:textSize="16sp" />
+
+            <EditText
                 android:id="@+id/userEdit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/editext_background"
+                android:background="@drawable/bg_edittext"
                 android:hint="Email Address"
                 android:inputType="textEmailAddress"
                 android:padding="12dp"
@@ -65,7 +78,7 @@
                     android:id="@+id/passEdit"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/editext_background"
+                    android:background="@drawable/bg_edittext"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:padding="12dp"
@@ -79,7 +92,7 @@
 
                 <ImageView
                     android:id="@+id/imgShow"
-                    android:src="@drawable/hidden"
+                    android:src="@drawable/ic_hidden"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:tint="@color/red"
@@ -112,7 +125,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:background="@color/white"
                 android:elevation="4dp"
                 android:gravity="center"
                 android:orientation="horizontal"

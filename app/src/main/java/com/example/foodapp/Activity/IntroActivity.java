@@ -1,8 +1,14 @@
 package com.example.foodapp.Activity;
 
+import static com.example.foodapp.Activity.BaseActivity.TAG;
+
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -12,11 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityIntroBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class IntroActivity extends BaseActivity {
+public class IntroActivity extends AppCompatActivity {
 
     ActivityIntroBinding binding;
 
@@ -25,15 +32,14 @@ public class IntroActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setVaraibles();
-        getWindow().setStatusBarColor(Color.parseColor("#FFE4B5"));
     }
 
     private void setVaraibles() {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 if (mAuth.getCurrentUser() != null) {
                     startActivity(new Intent(IntroActivity.this, MainActivity.class));
                 } else {
@@ -49,7 +55,7 @@ public class IntroActivity extends BaseActivity {
                 startActivity(new Intent(IntroActivity.this, SignupActivity.class));
             }
         });
-
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         // Kiểm tra xem người dùng đã đăng nhập chưa, nếu rồi sẽ chuyển qua
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override

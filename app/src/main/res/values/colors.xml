@@ -21,4 +21,9 @@
     <color name="text_black">#212121</color>
     <color name="text_gray">#757575</color>
     <color name="favorite_bg">#FFEBEE</color>
+    <color name="night_mode">#CDB38B</color>
+    <color name="notification">#13B2C3</color>
+    <color name="private_account">#E6A326</color>
+    <color name="security">#D95F69</color>
+    <color name="secondary">#FFCC99</color>
 </resources>

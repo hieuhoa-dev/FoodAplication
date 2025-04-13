@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +26,7 @@ import com.example.foodapp.Activity.SearchActivity;
 import com.example.foodapp.Adapter.BannerAdapter;
 import com.example.foodapp.Adapter.BestFoodsAdapter;
 import com.example.foodapp.Adapter.CategoryAdapter;
+import com.example.foodapp.Components.CustomDialog;
 import com.example.foodapp.Model.Banner;
 import com.example.foodapp.Model.Category;
 import com.example.foodapp.Model.Foods;
@@ -61,7 +65,14 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+
+            return insets;
+        });
 
 
 
@@ -106,6 +117,14 @@ public class HomeFragment extends BaseFragment {
                 return true; // Đánh dấu sự kiện đã xử lý
             }
             return false; // Không xử lý các sự kiện khác
+        });
+
+        binding.filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialog dialog = new CustomDialog(getContext());
+                dialog.show();
+            }
         });
     }
 

@@ -8,12 +8,11 @@
     tools:context=".Activity.IntroActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/orange_background"
@@ -24,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imgEdit"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/intro_pic"
         tools:src="@tools:sample/avatars" />

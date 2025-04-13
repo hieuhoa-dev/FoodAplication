@@ -13,18 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodapp.Components.CustomDialog;
+import com.example.foodapp.Helper.UserRepository;
 import com.example.foodapp.Model.Users;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.firestore.DocumentReference;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class SignupActivity extends BaseActivity {
     ActivitySignupBinding binding;
@@ -50,32 +50,47 @@ public class SignupActivity extends BaseActivity {
 
     // Kiểm tra mật khẩu có hợp lệ hay không và đăng ký tài khoản
     private void setVariable() {
-        binding.signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = binding.userEdit.getText().toString();
-                String password = binding.passEdit.getText().toString();
-                if (password.length() < 6) {
-                    Toast.makeText(SignupActivity.this, "Your password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // Sẽ Sửa sau
-                        if (task.isSuccessful()) {
-                            Log.i(TAG, "Successful");
-                            SetAccount();
-                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                            Toast.makeText(SignupActivity.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.i(TAG, "Fail", task.getException());
-                            Toast.makeText(SignupActivity.this, "Sign up failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        binding.signupBtn.setOnClickListener(view -> {
+            String email = binding.userEdit.getText().toString();
+            String password = binding.passEdit.getText().toString();
+            CustomDialog dialog = new CustomDialog(SignupActivity.this);
+
+            if (email.isEmpty() || password.isEmpty()) {
+                dialog.DialogNormal("Missing Info", "Please fill in all fields.");
+                return;
             }
+
+            if (password.length() < 6) {
+                dialog.DialogNormal("Weak Password", "Your password must be at least 6 characters.");
+                return;
+            }
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(SignupActivity.this, task -> {
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "Signup successful");
+                            SetAccount();
+                            dialog.DialogNormal("Success", "Sign up successfully.");
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            Exception e = task.getException();
+
+                            if (e instanceof FirebaseAuthUserCollisionException) {
+                                dialog.DialogNormal("Account Exists", "This email is already registered.");
+                            } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                                dialog.DialogNormal("Invalid Email", "Please enter a valid email address.");
+                            } else if (e instanceof FirebaseNetworkException) {
+                                dialog.DialogNormal("Network Error", "Please check your internet connection.");
+                            } else {
+                                dialog.DialogNormal("Signup Failed", "Error: " + e.getMessage());
+                            }
+
+                            Log.e(TAG, "Signup failed", e);
+                        }
+                    });
         });
+
 
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,31 +108,20 @@ public class SignupActivity extends BaseActivity {
                     binding.imgShow.setImageResource(R.drawable.show);
                 } else {
                     binding.passEdit.setInputType(129);
-                    binding.imgShow.setImageResource(R.drawable.hidden);
+                    binding.imgShow.setImageResource(R.drawable.ic_hidden);
                 }
             }
         });
     }
 
     void SetAccount() {
-        currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            // Người dùng chưa đăng nhập, xử lý tùy ý
-            return;
-        }
-        String uid = currentUser.getUid();
-        String email = currentUser.getEmail();
-        Users user = new Users(uid, "nameUser", "phoneNumber", email);
+        UserRepository userRepository = new UserRepository();
+        String uid = FirebaseAuth.getInstance().getUid();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String name = binding.nameEdit.getText().toString();
+        Users user = new Users(uid, name, "phoneNumber", email,"");
+        userRepository.setUser(user);
 
-        // Lưu vào collection "users", document = uid
-        firestore.collection("Users")
-                .document(uid)           // Đặt doc ID = UID
-                .set(user)              // Dùng set() thay vì add()
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("Firestore", "User info saved successfully!");
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error saving user info", e);
-                });
+
     }
 }

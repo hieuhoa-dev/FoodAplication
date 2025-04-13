@@ -65,7 +65,7 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="8sp"
                     android:layout_weight="1"
-                    android:background="@drawable/grey_background"
+                    android:background="@drawable/bg_grey"
                     android:ems="10"
                     android:hint="Enter your code"
 
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
 
-                android:background="@drawable/grey_background">
+                android:background="@drawable/bg_grey">
 
                 <TextView
                     android:id="@+id/textView22"

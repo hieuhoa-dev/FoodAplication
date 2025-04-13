@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
                 android:padding="4dp"
-                android:src="@drawable/clear_icon" />
+                android:src="@drawable/ic_clear" />
 
             <ImageView
                 android:id="@+id/searchBtn"

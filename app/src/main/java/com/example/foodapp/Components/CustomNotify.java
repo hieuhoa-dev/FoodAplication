@@ -1,6 +1,4 @@
-package com.example.foodapp.Helper;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
+package com.example.foodapp.Components;
 
 import android.Manifest;
 import android.app.Notification;
@@ -16,13 +14,13 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.foodapp.R;
 
-public class CustomerNotify {
+public class CustomNotify {
     private final String title;
     private final String description;
     private final Context context;
     private final String channelId = "CUSTOMER_CHANNEL";
 
-    public CustomerNotify(Context context, String title, String description) {
+    public CustomNotify(Context context, String title, String description) {
         this.title = title;
         this.description = description;
         this.context = context;

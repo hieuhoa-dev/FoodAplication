@@ -2,6 +2,7 @@ package com.example.foodapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,11 +12,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.foodapp.Components.CustomDialog;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
@@ -35,26 +41,39 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+
+
     private void setVariable() {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = binding.userEdit.getText().toString();
                 String password = binding.passEdit.getText().toString();
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                if (email.isEmpty() || password.isEmpty()) {
+                    new CustomDialog(LoginActivity.this)
+                            .DialogNormal("Error", "Please fill in all fields");
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, task -> {
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish(); // không cho back về login
                             } else {
-                                Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                Exception e = task.getException();
+                                CustomDialog dialog = new CustomDialog(LoginActivity.this);
+                                if (e instanceof FirebaseAuthInvalidUserException) {
+                                    dialog.DialogNormal("Sign in failed", "Account does not exist.");
+                                } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                                    dialog.DialogNormal("Sign in failed", "Invalid email or password.");
+                                } else if (e instanceof FirebaseNetworkException) {
+                                    dialog.DialogNormal("Network Error", "Please check your internet connection.");
+                                } else {
+                                    dialog.DialogNormal("Sign in failed", "An unexpected error occurred. Please try again.");
+                                }
                             }
-                        }
-                    });
-                } else {
-                    Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-                }
+                        });
             }
         });
 
@@ -72,7 +91,7 @@ public class LoginActivity extends BaseActivity {
                     binding.imgShow.setImageResource(R.drawable.show);
                 } else {
                     binding.passEdit.setInputType(129);
-                    binding.imgShow.setImageResource(R.drawable.hidden);
+                    binding.imgShow.setImageResource(R.drawable.ic_hidden);
                 }
             }
         });

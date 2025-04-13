@@ -24,7 +24,7 @@ public class BaseActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseDatabase database;
     FirebaseFirestore firestore;
-    public final String TAG = "FoodApp";
+    public static final String TAG = "FoodApp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,6 @@ public class BaseActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-
-        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-
 
     }
 
