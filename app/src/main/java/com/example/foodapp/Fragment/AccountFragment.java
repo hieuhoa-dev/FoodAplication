@@ -25,7 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cloudinary.android.MediaManager;
-import com.example.foodapp.Activity.NotificationActivity;
+import com.example.foodapp.Activity.EditActivity;
 import com.example.foodapp.Activity.PaymentActivity;
 import com.example.foodapp.Activity.SettingActivity;
 import com.example.foodapp.Helper.CloudinaryHelper;
@@ -106,43 +106,14 @@ public class AccountFragment extends BaseFragment {
 
             }
         });
-
-        binding.imgEdit.setOnClickListener(e -> openGallery());
     }
 
-    private void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
 
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            // Thiết lập ảnh lên ImageView
-            Log.i(TAG, imageUri.toString());
-//            binding.imgEdit.setImageURI(imageUri);
-            Glide.with(getContext())
-                    .load(imageUri)
-                    .transform(new CircleCrop())
-                    .into( binding.imgEdit);
-            SaveImg(imageUri, imageUri);
-        }
-    }
-
-    void SaveImg(Uri imageUri, Uri publicId)
-    {
-        CloudinaryHelper cloudinaryHelper = new CloudinaryHelper();
-        cloudinaryHelper.uploadImageToCloudinary(imageUri);
-        cloudinaryHelper.deleteImageFromCloudinary(publicId.toString());
-    }
 
     @Override
     public void onResume() {
         super.onResume();
+        setVariable();
     }
 
     void initBtn (){
@@ -159,7 +130,7 @@ public class AccountFragment extends BaseFragment {
 
 
         binding.btnnotification.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), NotificationActivity.class);
+            Intent intent = new Intent(getContext(), EditActivity.class);
             startActivity(intent);
         });
     }

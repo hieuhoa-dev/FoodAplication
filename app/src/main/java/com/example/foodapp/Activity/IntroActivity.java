@@ -14,11 +14,13 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.example.foodapp.Helper.DarkMode;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityIntroBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,13 @@ public class IntroActivity extends AppCompatActivity {
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setVaraibles();
+        DarkMode darkMode = new DarkMode(this);
+
+        if (darkMode.isDarkModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     private void setVaraibles() {

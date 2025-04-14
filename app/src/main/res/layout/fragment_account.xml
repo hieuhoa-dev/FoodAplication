@@ -45,7 +45,7 @@
                         android:id="@+id/imgEdit"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="48dp"
                         android:background="@drawable/img_user_default_stroke"
                         android:padding="3dp"
                         android:scaleType="center"
@@ -93,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/bg_moccasin"
@@ -153,8 +153,8 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="0dp"
                                 android:id="@+id/btnsetting"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="10dp"
                                 android:layout_weight="0.3333"
@@ -213,11 +213,12 @@
                                         android:id="@+id/imageView21"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:padding="12dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:srcCompat="@drawable/notification" />
+                                        app:srcCompat="@drawable/edit" />
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <TextView
@@ -387,8 +388,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginBottom="25dp"
                             android:orientation="horizontal">
 

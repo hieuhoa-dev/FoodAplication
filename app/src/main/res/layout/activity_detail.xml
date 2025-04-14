@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Title"
-                    android:textColor="@color/blue_grey"
+                    style="@style/textStyleColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -159,7 +159,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Detail"
-                android:textColor="@color/blue_grey"
+                style="@style/textStyleColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -172,7 +172,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="assaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                android:textColor="@color/blue_grey"
+                style="@style/textStyleColor"
                 android:textSize="16sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -187,7 +187,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quantity"
-                    android:textColor="@color/blue_grey"
+                    style="@style/textStyleColor"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

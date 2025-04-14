@@ -1,5 +1,6 @@
 package com.example.foodapp.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.graphics.Insets;
@@ -15,7 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.foodapp.Activity.LoginActivity;
+import com.example.foodapp.Activity.SettingActivity;
 import com.example.foodapp.Adapter.CartAdapter;
+import com.example.foodapp.Components.CustomDialog;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
 import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.Model.Bill;
@@ -52,7 +56,15 @@ public class CartFragment extends BaseFragment {
     }
 
     private void setVariable() {
-        binding.orderBtn.setOnClickListener(view -> SaveBill());
+        binding.orderBtn.setOnClickListener(view -> {
+            CustomDialog dialog = new CustomDialog(getContext());
+            dialog.setTitle("Notification");
+            dialog.setMessage("Are you sure you want to order?");
+            dialog.show();
+            dialog.setOkClickListener(v -> SaveBill());
+            dialog.setCancelClickListener(v -> dialog.dismiss());
+
+        });
     }
     void SaveBill() {
         currentUser = mAuth.getCurrentUser();

@@ -58,13 +58,9 @@ public class UserRepository {
 
     public void setUser(Users users) {
         String uid = users.getId();
-        String email = users.getEmail();
-        String name = users.getNameUser();
-        String phoneNumber = users.getPhoneNumber();
-        Users user = new Users(uid, name, phoneNumber, email,"");
         firestore.collection("Users")
                 .document(uid)           // Đặt doc ID = UID
-                .set(user)              // Dùng set() thay vì add()
+                .set(users)              // Dùng set() thay vì add()
                 .addOnSuccessListener(documentReference -> {
                     Log.d("Firestore", "User info saved successfully!");
                 })
@@ -85,4 +81,6 @@ public class UserRepository {
                     Log.e("Firestore", "Error saving user info", e);
                 });
     }
+
+
 }

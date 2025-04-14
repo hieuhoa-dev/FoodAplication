@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.example.foodapp.Activity.ListFoodsActivity;
 import com.example.foodapp.Activity.SearchActivity;
+import com.example.foodapp.Activity.SettingActivity;
 import com.example.foodapp.Adapter.BannerAdapter;
 import com.example.foodapp.Adapter.BestFoodsAdapter;
 import com.example.foodapp.Adapter.CategoryAdapter;
@@ -122,8 +123,7 @@ public class HomeFragment extends BaseFragment {
         binding.filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog dialog = new CustomDialog(getContext());
-                dialog.show();
+               startActivity(new Intent(getContext(), SettingActivity.class));
             }
         });
     }

@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pink">#FFF3F3</color>
     <color name="red">#F75564</color>
     <color name="blue_grey">#2E4068</color>
     <color name="gray_light">#FFBE35</color>
@@ -26,4 +27,14 @@
     <color name="private_account">#E6A326</color>
     <color name="security">#D95F69</color>
     <color name="secondary">#FFCC99</color>
+    <color name="dark_black">#1F1F1F</color>
+
+    <color name="bottom_bar_bg">#FFFFFF</color>
+    <color name="bottom_bar_icon">#595959</color>
+    <color name="bottom_bar_icon_active">#FFFFFF</color>
+    <color name="bottom_bar_indicator">#2E4068</color>
+    <color name="bottom_bar_text">#FFFFFF</color>
+
+    <color name="buton_10">#000000</color>
+    <color name="buton_10_text">#FFFFFF</color>
 </resources>

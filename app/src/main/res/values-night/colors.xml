@@ -1,0 +1,8 @@
+<resources>
+    <color name="bottom_bar_bg">#383838</color>
+    <color name="bottom_bar_icon">#FFFFFF</color>
+    <color name="bottom_bar_indicator">#F75564</color>
+
+    <color name="buton_10">#FFFFFF</color>
+    <color name="buton_10_text">#000000</color>
+</resources>

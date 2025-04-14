@@ -135,7 +135,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:text="Choose Category"
-                android:textColor="@color/blue_grey"
+                style="@style/textStyleColor"
                 android:textSize="22dp"
                 android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Best sales"
-                    android:textColor="@color/blue_grey"
+                    style="@style/textStyleColor"
                     android:textSize="22dp"
                     android:textStyle="bold" />
 
