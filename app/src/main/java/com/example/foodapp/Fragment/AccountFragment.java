@@ -1,6 +1,5 @@
 package com.example.foodapp.Fragment;
 
-import static android.app.Activity.RESULT_OK;
 import static com.example.foodapp.Activity.BaseActivity.TAG;
 import static com.example.foodapp.Helper.API.API_KEY;
 import static com.example.foodapp.Helper.API.APT_SECRET;
@@ -8,7 +7,6 @@ import static com.example.foodapp.Helper.API.CLOUD_NAME;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -26,14 +24,14 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cloudinary.android.MediaManager;
 import com.example.foodapp.Activity.EditActivity;
-import com.example.foodapp.Activity.PaymentActivity;
+import com.example.foodapp.Activity.OrderActivity;
 import com.example.foodapp.Activity.SettingActivity;
-import com.example.foodapp.Helper.CloudinaryHelper;
 import com.example.foodapp.Helper.UserRepository;
 import com.example.foodapp.Helper.OnUserListener;
 import com.example.foodapp.Model.Users;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.FragmentAccountBinding;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +39,7 @@ import java.util.Objects;
 
 public class AccountFragment extends BaseFragment {
     FragmentAccountBinding binding;
-
+    ListenerRegistration userListener;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +64,13 @@ public class AccountFragment extends BaseFragment {
     private void setVariable() {
         UserRepository ma = new UserRepository();
         Log.i(TAG, "Test 1");
-        ma.getUser(new OnUserListener() {
+        userListener = ma.getUserOnChangeListener(new OnUserListener() {
             @Override
             public void onDataReceived(Users users) {
                 binding.NameUserTxt.setText(users.getNameUser());
                 binding.EmailUserTxt.setText(users.getEmail());
                 binding.PhoneNumberTxt.setText(users.getPhoneNumber());
+                binding.AddressTxt.setText(users.getAddress());
                 if (!Objects.equals(users.getImg(), "")) {
                         Log.i(TAG, users.getImg());
                     Glide.with(getContext())
@@ -113,12 +112,11 @@ public class AccountFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        setVariable();
     }
 
     void initBtn (){
         binding.btnpayment.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), PaymentActivity.class);
+            Intent intent = new Intent(getContext(), OrderActivity.class);
             startActivity(intent);
         });
 
@@ -133,5 +131,14 @@ public class AccountFragment extends BaseFragment {
             Intent intent = new Intent(getContext(), EditActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (userListener != null) {
+            userListener.remove();
+            userListener = null;
+        }
     }
 }

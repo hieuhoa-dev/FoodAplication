@@ -1,30 +1,17 @@
 package com.example.foodapp.Activity;
 
 
-import static com.example.foodapp.Activity.BaseActivity.TAG;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 
 
 import androidx.activity.EdgeToEdge;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 
-import com.example.foodapp.Fragment.MangerFragmentAdapter;
-import com.example.foodapp.Helper.UserRepository;
-import com.example.foodapp.Model.Users;
-import com.example.foodapp.R;
+import com.example.foodapp.Adapter.MangerFragmentAdapter;
 import com.example.foodapp.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 

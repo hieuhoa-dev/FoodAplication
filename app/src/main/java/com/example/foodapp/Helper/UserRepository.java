@@ -7,7 +7,9 @@ import android.util.Log;
 import com.example.foodapp.Model.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 public class UserRepository {
     FirebaseAuth mAuth;
@@ -54,6 +56,33 @@ public class UserRepository {
                     Log.e("Firestore", "Error getting user info", e);
                     Log.i(TAG, "Test 4");
                 });
+    }
+
+    public ListenerRegistration getUserOnChangeListener(OnUserListener getUser) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DocumentReference userRef = firestore.collection("Users").document(uid);
+
+        // Lắng nghe thay đổi thời gian thực
+        return userRef.addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Error listening to user info", e);
+                getUser.onError();
+                return;
+            }
+
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                Users user = documentSnapshot.toObject(Users.class);
+                if (user != null) {
+                    Log.i(TAG, "User data received: " + user.getNameUser());
+                    getUser.onDataReceived(user);
+                } else {
+                    Log.w(TAG, "User object is null");
+                    getUser.onDataEmpty();
+                }
+            } else {
+                Log.w(TAG, "Document does not exist");
+                getUser.onDataEmpty();
+        }});
     }
 
     public void setUser(Users users) {

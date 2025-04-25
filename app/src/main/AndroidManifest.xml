@@ -23,7 +23,7 @@
             android:name=".Activity.EditActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.PaymentActivity"
+            android:name=".Activity.OrderActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SettingActivity"

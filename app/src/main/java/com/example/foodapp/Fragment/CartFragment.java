@@ -20,18 +20,23 @@ import com.example.foodapp.Activity.LoginActivity;
 import com.example.foodapp.Activity.SettingActivity;
 import com.example.foodapp.Adapter.CartAdapter;
 import com.example.foodapp.Components.CustomDialog;
+import com.example.foodapp.Helper.BillRepository;
+import com.example.foodapp.Helper.BillStatus;
 import com.example.foodapp.Helper.ChangeNumberItemsListener;
 import com.example.foodapp.Helper.ManagementCart;
 import com.example.foodapp.Model.Bill;
 import com.example.foodapp.Model.Users;
 import com.example.foodapp.databinding.FragmentCartBinding;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class CartFragment extends BaseFragment {
 
     private FragmentCartBinding binding;
     private RecyclerView.Adapter adapter;
     private ManagementCart managmentCart;
-    private  double tax;
+    private double tax;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,41 +66,45 @@ public class CartFragment extends BaseFragment {
             dialog.setTitle("Notification");
             dialog.setMessage("Are you sure you want to order?");
             dialog.show();
-            dialog.setOkClickListener(v -> SaveBill());
+            dialog.setOkClickListener(v -> {
+                SaveBill();
+                dialog.dismiss();
+            });
             dialog.setCancelClickListener(v -> dialog.dismiss());
 
         });
     }
+
     void SaveBill() {
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             return;
         }
         String uid = currentUser.getUid();
-        Bill bill = new Bill("",uid, managmentCart.getListCart());
+        // Lấy thời gian hiện tại
+        LocalDateTime now = LocalDateTime.now();
+        // Định dạng thời gian (ví dụ: 23/04/2025 15:30:45)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+        Bill bill = new Bill(
+                "",
+                uid,
+                managmentCart.getListCart(),
+                formattedDateTime,
+                BillStatus.WAIT_CONFIRM.getDescription(),
+                managmentCart.getListCart().size(),
+                managmentCart.getTotalFee());
 
-        firestore.collection("Bill")
-                .add(bill)
-                .addOnSuccessListener(documentReference -> {
-                    String billId = documentReference.getId(); // Lấy ID tự động
-                    documentReference.update("id", billId) // Cập nhật id
-                            .addOnSuccessListener(e ->
-                                    Toast.makeText(getContext(), "Order successfully", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e ->
-                                    Toast.makeText(getContext(), "Failed to update bill ID", Toast.LENGTH_SHORT).show());
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Order fail", Toast.LENGTH_SHORT).show();
-                });
+        BillRepository billRepository = new BillRepository(getContext());
+        billRepository.SaveBill(bill);
     }
 
 
     private void initList() {
-        if(managmentCart.getListCart().isEmpty()) {
+        if (managmentCart.getListCart().isEmpty()) {
             binding.emptyTxt.setVisibility(View.VISIBLE);
             binding.srollViewCart.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             binding.emptyTxt.setVisibility(View.GONE);
             binding.srollViewCart.setVisibility(View.VISIBLE);
         }

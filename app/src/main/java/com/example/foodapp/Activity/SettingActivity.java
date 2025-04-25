@@ -1,8 +1,9 @@
 package com.example.foodapp.Activity;
 
+import static com.example.foodapp.Activity.BaseActivity.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -15,9 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.foodapp.Components.CustomDialog;
 import com.example.foodapp.Helper.DarkMode;
 import com.example.foodapp.Helper.UserRepository;
-import com.example.foodapp.R;
-import com.example.foodapp.databinding.ActivityDetailBinding;
-import com.example.foodapp.databinding.ActivityPaymentBinding;
 import com.example.foodapp.databinding.ActivitySettingBinding;
 
 public class SettingActivity extends AppCompatActivity {

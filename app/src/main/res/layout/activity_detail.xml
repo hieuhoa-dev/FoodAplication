@@ -45,9 +45,9 @@
 
                     <ImageView
                         android:id="@+id/favBtn"
-                        android:layout_margin="15dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_margin="15dp"
                         android:background="@drawable/bg_fav"
                         android:elevation="5dp"
                         android:padding="10dp"
@@ -83,11 +83,11 @@
 
                 <TextView
                     android:id="@+id/titleTxt"
+                    style="@style/textStyleColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Title"
-                    style="@style/textStyleColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -153,18 +153,19 @@
 
             <TextView
                 android:id="@+id/textView18"
+                style="@style/textStyleColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Detail"
-                style="@style/textStyleColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/descriptionTxt"
+                style="@style/textStyleColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -172,22 +173,19 @@
                 android:layout_marginEnd="16dp"
                 android:text="assaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                style="@style/textStyleColor"
                 android:textSize="16sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:id="@+id/textView20"
+                    style="@style/textStyleColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quantity"
-                    style="@style/textStyleColor"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

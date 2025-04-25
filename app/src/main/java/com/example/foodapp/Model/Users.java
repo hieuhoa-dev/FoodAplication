@@ -6,16 +6,18 @@ public class Users {
     String Email;
     String PhoneNumber;
     String Img;
+    String Address;
 
     public Users() {
     }
 
-    public Users(String id, String nameUser, String phoneNumber, String email, String Img) {
+    public Users(String id, String nameUser, String phoneNumber, String email, String Img, String Address) {
         Id = id;
         NameUser = nameUser;
         PhoneNumber = phoneNumber;
         Email = email;
         this.Img = Img;
+        this.Address = Address;
     }
 
     public String getImg() {
@@ -56,5 +58,13 @@ public class Users {
 
     public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
     }
 }

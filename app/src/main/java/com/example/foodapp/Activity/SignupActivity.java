@@ -119,9 +119,7 @@ public class SignupActivity extends BaseActivity {
         String uid = FirebaseAuth.getInstance().getUid();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String name = binding.nameEdit.getText().toString();
-        Users user = new Users(uid, name, "phoneNumber", email,"");
+        Users user = new Users(uid, name, "phoneNumber", email,"","");
         userRepository.setUser(user);
-
-
     }
 }

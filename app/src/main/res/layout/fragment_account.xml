@@ -145,7 +145,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
-                                    android:text="Payment"
+                                    android:text="Order"
                                     android:textAlignment="center"
                                     android:textColor="#000000"
                                     android:textSize="13sp"
@@ -257,9 +257,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Change"
+                                android:text="Change>"
                                 android:textAlignment="viewEnd"
-                                android:textColor="#8B8878"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -363,7 +362,7 @@
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView27"
+                                android:id="@+id/AddressTxt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

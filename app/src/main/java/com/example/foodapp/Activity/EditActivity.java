@@ -25,13 +25,14 @@ import com.example.foodapp.Model.Users;
 import com.example.foodapp.R;
 import com.example.foodapp.databinding.ActivityEditBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
     ActivityEditBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,9 @@ public class EditActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     private String selectedImageUrl = "";
     Uri imageUri =null;
     void initVariable()
@@ -68,7 +72,7 @@ public class EditActivity extends AppCompatActivity {
                 binding.editName.setText(users.getNameUser());
                 binding.editEmail.setText(users.getEmail());
                 binding.editPhone.setText(users.getPhoneNumber());
-//                binding.editAddress.setText(users.getAddress());
+                binding.editAddress.setText(users.getAddress());
                 Glide.with(EditActivity.this)
                         .load(users.getImg())
                         .transform(new CircleCrop())
@@ -98,7 +102,7 @@ public class EditActivity extends AppCompatActivity {
                 String phone = binding.editPhone.getText().toString();
                 String address = binding.editAddress.getText().toString();
                 UserRepository ur = new UserRepository();
-                ur.setUser(new Users(uid,name,phone,email,selectedImageUrl));
+                ur.setUser(new Users(uid,name,phone,email,selectedImageUrl,address));
                 if(imageUri != null
                         && !Objects.equals(selectedImageUrl, "")
                         && !Objects.equals(selectedImageUrl, imageUri.toString()))
@@ -137,4 +141,5 @@ public class EditActivity extends AppCompatActivity {
         CloudinaryHelper cloudinaryHelper = new CloudinaryHelper();
         cloudinaryHelper.uploadImageToCloudinary(imageUri);
     }
+
 }
