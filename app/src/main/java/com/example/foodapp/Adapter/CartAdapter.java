@@ -52,31 +52,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-        holder.plusItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                managmentCart.plusNumberItem(list, position, new ChangeNumberItemsListener() {
-                    @Override
-                    public void change() {
-                        notifyDataSetChanged();
-                        changeNumberItemsListener.change();
-                    }
-                });
-            }
-        });
+        holder.plusItem.setOnClickListener(view -> managmentCart.plusNumberItem(list, position, () -> {
+            notifyDataSetChanged();
+            changeNumberItemsListener.change();
+        }));
 
-        holder.minusItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                managmentCart.minusNumberItem(list, position, new ChangeNumberItemsListener() {
-                    @Override
-                    public void change() {
-                        notifyDataSetChanged();
-                        changeNumberItemsListener.change();
-                    }
-                });
-            }
-        });
+        holder.minusItem.setOnClickListener(view -> managmentCart.minusNumberItem(list, position, () -> {
+            notifyDataSetChanged();
+            changeNumberItemsListener.change();
+        }));
     }
 
     @Override

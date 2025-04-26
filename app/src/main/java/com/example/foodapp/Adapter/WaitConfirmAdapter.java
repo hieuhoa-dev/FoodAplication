@@ -48,7 +48,7 @@ public class WaitConfirmAdapter extends RecyclerView.Adapter<WaitConfirmAdapter.
         holder.billOrderIDTxt.setText("OrderID: " + order.getId());
         holder.billDateTxt.setText(order.getDate());
         holder.billStatusTxt.setText(order.getStatus());
-        holder.billTotalTxt.setText(String.valueOf(order.getTotal()));
+        holder.billTotalTxt.setText(String.valueOf(Math.round(order.getTotal())));
         holder.billOrderQuantity.setText(String.valueOf(order.getQuantity()));
         holder.billDetailbtn.setOnClickListener(new View.OnClickListener() {
             @Override

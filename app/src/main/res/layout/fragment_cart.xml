@@ -25,8 +25,9 @@
     <ScrollView
         android:id="@+id/srollViewCart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,11 +37,11 @@
 
             <TextView
                 android:id="@+id/textView16"
+                style="@style/textStyleColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cart"
                 android:textAlignment="center"
-                style="@style/textStyleColor"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -53,164 +54,177 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
+        </LinearLayout>
+    </ScrollView>
 
-                <EditText
-                    android:id="@+id/editTextText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="8sp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_grey"
-                    android:ems="10"
-                    android:hint="Enter your code"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-                    android:inputType="text"
-                    android:textAlignment="center"
-                    android:textColor="@color/blue_grey"
-                    android:textColorHint="@color/blue_grey"
-                    android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_grey"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
-                    android:layout_width="145dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/red_button_background2"
-                    android:text="Apply Coupon"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/editTextText"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8sp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_grey"
+                android:ems="10"
+                android:hint="Enter your code"
+
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/blue_grey"
+                android:textColorHint="@color/blue_grey"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button"
+                android:layout_width="145dp"
+                android:layout_height="40dp"
+                android:background="@drawable/red_button_background2"
+                android:text="Apply Coupon"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/bg_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
+                android:id="@+id/textView22"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Subtotal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView24"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Delivery"
+                app:layout_constraintStart_toStartOf="@+id/textView22"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+            <TextView
+                android:id="@+id/PhoneNumberTxt"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Total Tax"
+                app:layout_constraintStart_toStartOf="@+id/textView24"
+                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+            <TextView
+                android:id="@+id/totalFeeTxt"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="$-"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+            <TextView
+                android:id="@+id/deliveryTxt"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="$-"
+                app:layout_constraintEnd_toEndOf="@+id/totalFeeTxt"
+                app:layout_constraintTop_toBottomOf="@+id/totalFeeTxt" />
+
+            <TextView
+                android:id="@+id/taxTxt"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="$-"
+                app:layout_constraintEnd_toEndOf="@+id/deliveryTxt"
+                app:layout_constraintTop_toBottomOf="@+id/deliveryTxt" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="#ABABAB"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/PhoneNumberTxt" />
+
+            <TextView
+                android:id="@+id/textView29"
+                style="@style/textStyleBold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                style="@style/textStyleColor"
-                android:textColor="@color/blue_grey"
-                android:textSize="18sp"
+                android:text="Total "
+                app:layout_constraintStart_toStartOf="@+id/PhoneNumberTxt"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-                android:textStyle="bold" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/totalTxt"
+                style="@style/textStyleBold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-
-                android:background="@drawable/bg_grey">
-
-                <TextView
-                    android:id="@+id/textView22"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Subtotal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView24"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Delivery"
-                    app:layout_constraintStart_toStartOf="@+id/textView22"
-                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-                <TextView
-                    android:id="@+id/PhoneNumberTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Total Tax"
-                    app:layout_constraintStart_toStartOf="@+id/textView24"
-                    app:layout_constraintTop_toBottomOf="@+id/textView24" />
-
-                <TextView
-                    android:id="@+id/totalFeeTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="$-"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView22" />
-
-                <TextView
-                    android:id="@+id/deliveryTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="$-"
-                    app:layout_constraintEnd_toEndOf="@+id/totalFeeTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/totalFeeTxt" />
-
-                <TextView
-                    android:id="@+id/taxTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="$-"
-                    app:layout_constraintEnd_toEndOf="@+id/deliveryTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/deliveryTxt" />
-
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="#ABABAB"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumberTxt" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Total "
-                    app:layout_constraintStart_toStartOf="@+id/PhoneNumberTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-                <TextView
-                    android:id="@+id/totalTxt"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="$-"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView29" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="$-"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView29"
+                app:layout_constraintTop_toTopOf="@+id/textView29" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/orderBtn"
                 style="@android:style/Widget.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/red_button_background"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/red_button_background2"
                 android:text="Place Order"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView29"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView29" />
 
-        </LinearLayout>
-    </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
