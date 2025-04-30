@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.foodapp.Components.CustomDialog;
+import com.example.foodapp.Helper.CloudinaryHelper;
 import com.example.foodapp.Helper.DarkMode;
 import com.example.foodapp.Helper.UserRepository;
 import com.example.foodapp.databinding.ActivitySettingBinding;

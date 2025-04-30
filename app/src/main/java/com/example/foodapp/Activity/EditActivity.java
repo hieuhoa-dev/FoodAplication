@@ -104,8 +104,8 @@ public class EditActivity extends AppCompatActivity {
                 UserRepository ur = new UserRepository();
                 ur.setUser(new Users(uid,name,phone,email,selectedImageUrl,address));
                 if(imageUri != null
-                        && !Objects.equals(selectedImageUrl, "")
-                        && !Objects.equals(selectedImageUrl, imageUri.toString()))
+                        || !Objects.equals(selectedImageUrl, "")
+                )
                 {
                     SaveImg(imageUri);
                 }

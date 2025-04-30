@@ -26,6 +26,7 @@ import com.cloudinary.android.MediaManager;
 import com.example.foodapp.Activity.EditActivity;
 import com.example.foodapp.Activity.OrderActivity;
 import com.example.foodapp.Activity.SettingActivity;
+import com.example.foodapp.Helper.CloudinaryHelper;
 import com.example.foodapp.Helper.UserRepository;
 import com.example.foodapp.Helper.OnUserListener;
 import com.example.foodapp.Model.Users;
@@ -33,13 +34,13 @@ import com.example.foodapp.R;
 import com.example.foodapp.databinding.FragmentAccountBinding;
 import com.google.firebase.firestore.ListenerRegistration;
 
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Objects;
 
 public class AccountFragment extends BaseFragment {
     FragmentAccountBinding binding;
     ListenerRegistration userListener;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +53,8 @@ public class AccountFragment extends BaseFragment {
         setVariable();
         initBtn();
 
-        Map config = new HashMap();
-        config.put("cloud_name", CLOUD_NAME); // Thay bằng Cloud Name của bạn
-        config.put("api_key", API_KEY);       // Thay bằng API Key của bạn
-        config.put("api_secret", APT_SECRET); // Thay bằng API Secret của bạn
-        MediaManager.init(getContext(), config);
+        CloudinaryHelper cloudinaryHelper = new CloudinaryHelper(getContext());
+        cloudinaryHelper.setCloudinary();
 
         return binding.getRoot();
     }
@@ -71,27 +69,24 @@ public class AccountFragment extends BaseFragment {
                 binding.EmailUserTxt.setText(users.getEmail());
                 binding.PhoneNumberTxt.setText(users.getPhoneNumber());
                 binding.AddressTxt.setText(users.getAddress());
-                if (!Objects.equals(users.getImg(), "")) {
-                        Log.i(TAG, users.getImg());
-                    Glide.with(getContext())
-                            .load(users.getImg())
-                            .transform(new CircleCrop())
-                            .placeholder(R.drawable.img_user_default)  // Ảnh tạm hiển thị trong khi tải
-                            .listener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    Log.e(TAG, "Glide load failed", e);
-                                    return false;
-                                }
+                Glide.with(getContext())
+                        .load(users.getImg())
+                        .transform(new CircleCrop())
+                        .placeholder(R.drawable.img_user_default)  // Ảnh tạm hiển thị trong khi tải
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                Log.e(TAG, "Glide load failed", e);
+                                return false;
+                            }
 
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    Log.i(TAG, "Glide load success");
-                                    return false;
-                                }
-                            })
-                            .into(binding.imgEdit);
-                }
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                Log.i(TAG, "Glide load success");
+                                return false;
+                            }
+                        })
+                        .into(binding.imgEdit);
                 Log.i(TAG, "Test 2");
             }
 
@@ -108,13 +103,12 @@ public class AccountFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
     }
 
-    void initBtn (){
+    void initBtn() {
         binding.btnpayment.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), OrderActivity.class);
             startActivity(intent);
