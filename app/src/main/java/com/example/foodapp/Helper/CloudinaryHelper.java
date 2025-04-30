@@ -83,9 +83,9 @@ public class CloudinaryHelper {
     public void setCloudinary() {
         if (!isInitialized) {
             Map config = new HashMap();
-            config.put("cloud_name", "your_cloud_name");
-            config.put("api_key", "your_api_key");
-            config.put("api_secret", "your_api_secret");
+            config.put("cloud_name", CLOUD_NAME); // Thay bằng Cloud Name của bạn
+            config.put("api_key", API_KEY);       // Thay bằng API Key của bạn
+            config.put("api_secret", APT_SECRET); // Thay bằng API Secret của bạn
             MediaManager.init(context, config);
             isInitialized = true;
         }
