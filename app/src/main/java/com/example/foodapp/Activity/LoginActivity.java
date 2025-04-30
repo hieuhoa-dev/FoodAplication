@@ -38,9 +38,17 @@ public class LoginActivity extends BaseActivity {
             return insets;
         });
         setVariable();
+        checkSignupSuccess();
 
     }
 
+    private void checkSignupSuccess() {
+        boolean signupSuccess = getIntent().getBooleanExtra("signup_success", false);
+        if (signupSuccess) {
+            CustomDialog dialog = new CustomDialog(this);
+            dialog.DialogNormal("Success", "Sign up successfully.");
+        }
+    }
 
 
     private void setVariable() {

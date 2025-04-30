@@ -70,8 +70,9 @@ public class SignupActivity extends BaseActivity {
                         if (task.isSuccessful()) {
                             Log.i(TAG, "Signup successful");
                             SetAccount();
-                            dialog.DialogNormal("Success", "Sign up successfully.");
-                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                            intent.putExtra("signup_success", true);
+                            startActivity(intent);
                             finish();
                         } else {
                             Exception e = task.getException();
